@@ -6,7 +6,7 @@ export default function Navbar() {
       <div className="h-20 flex items-center justify-between px-4">
 
         {/* Logo */}
-        <Link to={`/home`}><img src="images/logo.png" alt="Logo" className="h-28" /></Link>
+        <Link to={`/`}><img src="images/logo.png" alt="Logo" className="h-28" /></Link>
         
 
         {/* Menu - hidden on small screens */}

@@ -12,9 +12,9 @@ function App() {
     return(
         <div>
             <Navbar />
-            <div className='pt-24'>
+            <div className='pt-28'>
                 <Routes>
-                    <Route path='/' element={<Home />} />
+                    <Route path='/' element={<Home/>} />
                     <Route path='/men' element={<Men />} />
                     <Route path='/women' element={<Women/>} />
                     <Route path='/kids' element={<Kids />} />
