@@ -32,9 +32,9 @@ export default function Navbar() {
 
         {/* Icons */}
         <div className="flex md:flex gap-3 text-xl">
-          <button title="Favorite">❤️</button>
-          <button title="Cart">🛒</button>
-          <button title="Login">👤</button>
+          <Link to={`/favorite`} title="Favorite">❤️</Link>
+          <Link to={`/cart`} title="Cart">🛒</Link>
+          <Link to={`/login`} title="Login">👤</Link>
         </div>
 
         {/* Mobile Menu Button */}

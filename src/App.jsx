@@ -6,6 +6,10 @@ import Men from './Pages/Men'
 import Women from './Pages/Women'
 import Kids from './Pages/Kids'
 import Brand from './Pages/Brand'
+import Cart from './Pages/Cart'
+import Favorite from './Pages/Favorite'
+import Login from './Pages/Login'
+
 
 
 function App() {
@@ -19,6 +23,9 @@ function App() {
                     <Route path='/women' element={<Women/>} />
                     <Route path='/kids' element={<Kids />} />
                     <Route path='/brands' element={<Brand />}/>
+                    <Route path='/cart' element={<Cart />}/>
+                    <Route path='/favorite' element={<Favorite/>}/>
+                    <Route path='/login' element={<Login/>} />
                 </Routes>
             </div>
 
