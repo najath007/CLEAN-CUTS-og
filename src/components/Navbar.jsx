@@ -1,47 +1,138 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navLinks = [
+    { name: "MEN", path: "/men" },
+    { name: "WOMEN", path: "/women" },
+    { name: "KIDS", path: "/kids" },
+    { name: "BRANDS", path: "/brands" },
+  ];
+
   return (
-    <div className="fixed top-0 left-0 right-0 w-full bg-white z-50 shadow">
-      <div className="h-20 flex items-center justify-between px-4">
-
-        {/* Logo */}
-        <Link to={`/`}><img src="images/logo.png" alt="Logo" className="h-28" /></Link>
+    <motion.div
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? "bg-white/80 backdrop-blur-md shadow-sm py-2" 
+          : "bg-white py-4"
+      }`}
+    >
+      <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         
-
-        {/* Menu - hidden on small screens */}
-        <div className="hidden md:flex justify-center gap-8 text-gray-500 font-medium">
-          <Link to={`/men`} className="cursor-pointer hover:text-black">MEN</Link>
-          <Link to={`/women`} className="cursor-pointer hover:text-black">WOMEN</Link>
-          <Link to={`/kids`} className="cursor-pointer hover:text-black">KIDS</Link>
-          <Link to={`/brands`} className="cursor-pointer hover:text-black">BRAND</Link>
+        {/* Logo */}
+        <Link to={`/`} className="flex-shrink-0">
+          <span className="font-heading font-bold text-2xl tracking-tighter text-brand-dark">
+            Clean<span className="text-brand-accent">Cuts.</span>
+          </span>
+        </Link>
+        
+        {/* Desktop Menu */}
+        <div className="hidden md:flex justify-center gap-8 text-sm font-medium text-slate-600">
+          {navLinks.map((link) => (
+            <Link 
+              key={link.name}
+              to={link.path} 
+              className={`relative py-1 hover:text-brand-dark transition-colors ${
+                location.pathname === link.path ? "text-brand-dark" : ""
+              }`}
+            >
+              {link.name}
+              {location.pathname === link.path && (
+                <motion.div
+                  layoutId="navbar-indicator"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-brand-accent rounded-full"
+                />
+              )}
+            </Link>
+          ))}
         </div>
 
         {/* Search Bar */}
-        <div className="hidden md:flex items-center">
+        <div className="hidden lg:flex items-center relative">
           <input
             type="text"
-            placeholder="Search for products, brands and more"
-            className="border-2 border-black rounded-full w-64 lg:w-80 text-center px-3 py-1"
+            placeholder="Search products..."
+            className="bg-slate-100 border-none rounded-full w-64 px-4 py-2 pl-10 text-sm focus:outline-none focus:ring-2 focus:ring-brand-accent/50 transition-all"
           />
-
-          <button className="border-2 border-black rounded-full px-4 py-1 ml-2">
-            Search
-          </button>
+          <Search className="absolute left-3 text-slate-400" size={16} />
         </div>
 
         {/* Icons */}
-        <div className="flex md:flex gap-3 text-xl">
-          <Link to={`/favorite`} title="Favorite">❤️</Link>
-          <Link to={`/cart`} title="Cart">🛒</Link>
-          <Link to={`/login`} title="Login">👤</Link>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden text-3xl cursor-pointer">
-          ☰
+        <div className="flex items-center gap-5 text-slate-600">
+          <Link to={`/favorite`} className="hover:text-brand-accent transition-colors relative group">
+            <Heart size={20} />
+            <span className="absolute -top-1 -right-1 bg-brand-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+              0
+            </span>
+          </Link>
+          <Link to={`/cart`} className="hover:text-brand-accent transition-colors relative">
+            <ShoppingCart size={20} />
+            <span className="absolute -top-1.5 -right-1.5 bg-brand-dark text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+              2
+            </span>
+          </Link>
+          <Link to={`/login`} className="hover:text-brand-accent transition-colors hidden sm:block">
+            <User size={20} />
+          </Link>
+          
+          {/* Mobile Menu Toggle */}
+          <button 
+            className="md:hidden hover:text-brand-accent transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
-    </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-slate-100 overflow-hidden"
+          >
+            <div className="px-4 py-6 flex flex-col gap-4">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.path}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-lg font-medium text-slate-800 hover:text-brand-accent"
+                >
+                  {link.name}
+                </Link>
+              ))}
+              <div className="relative mt-4">
+                <input
+                  type="text"
+                  placeholder="Search products..."
+                  className="bg-slate-100 border-none rounded-full w-full px-4 py-3 pl-10 text-sm focus:outline-none"
+                />
+                <Search className="absolute left-3 top-3.5 text-slate-400" size={18} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 }
