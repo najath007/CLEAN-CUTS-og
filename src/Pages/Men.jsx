@@ -18,14 +18,7 @@ export default function Men() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
         {menProduct.map((item, index) => (
-          <ProductCard 
-            key={index}
-            image={item.image}
-            tittle={item.tittle}
-            desc={item.desc}
-            price={item.price}
-            rating={item.rating}
-          />
+          <ProductCard key={item.id || index} product={item} />
         ))}
       </div>
     </motion.div>

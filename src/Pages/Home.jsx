@@ -109,13 +109,7 @@ function Home() {
         >
           {menProduct.map((item, index) => (
             <motion.div key={index} variants={itemVariants} className="w-full flex justify-center">
-              <ProductCard 
-                image={item.image}
-                tittle={item.tittle}
-                desc={item.desc}
-                price={item.price}
-                rating={item.rating}
-              />
+              <ProductCard product={item} />
             </motion.div>
           ))}
         </motion.div>

@@ -1,7 +1,15 @@
 import { Heart, ShoppingBag, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { useShop } from "../context/ShopContext";
 
-export default function ProductCard({ image, tittle, desc, price, rating }) {
+export default function ProductCard({ product }) {
+  const { addToCart, toggleWishlist, isInWishlist } = useShop();
+  
+  if (!product) return null;
+
+  const { image, tittle, desc, price, rating, id } = product;
+  const isFavorite = isInWishlist(id);
+
   return (
     <motion.div 
       whileHover={{ y: -8 }}
@@ -21,8 +29,14 @@ export default function ProductCard({ image, tittle, desc, price, rating }) {
         
         {/* Top actions */}
         <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-          <button className="bg-white p-2.5 rounded-full shadow-md text-slate-400 hover:text-brand-accent hover:bg-slate-50 transition-colors">
-            <Heart size={18} />
+          <button 
+            onClick={() => toggleWishlist(product)}
+            className="bg-white p-2.5 rounded-full shadow-md hover:scale-110 transition-transform"
+          >
+            <Heart 
+              size={18} 
+              className={isFavorite ? "fill-brand-accent text-brand-accent" : "text-slate-400"} 
+            />
           </button>
         </div>
 
@@ -49,7 +63,10 @@ export default function ProductCard({ image, tittle, desc, price, rating }) {
             <span className="font-semibold text-lg text-slate-900">₹{price}</span>
           </div>
           
-          <button className="bg-brand-dark hover:bg-brand-accent text-white p-2.5 rounded-xl transition-colors flex items-center justify-center">
+          <button 
+            onClick={() => addToCart(product)}
+            className="bg-brand-dark hover:bg-brand-accent text-white p-2.5 rounded-xl transition-colors flex items-center justify-center"
+          >
             <ShoppingBag size={18} />
           </button>
         </div>

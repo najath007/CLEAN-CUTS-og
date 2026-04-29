@@ -2,11 +2,13 @@ import { Link, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
+import { useShop } from "../context/ShopContext";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { cart, wishlist } = useShop();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,15 +79,19 @@ export default function Navbar() {
         <div className="flex items-center gap-5 text-slate-600">
           <Link to={`/favorite`} className="hover:text-brand-accent transition-colors relative group">
             <Heart size={20} />
-            <span className="absolute -top-1 -right-1 bg-brand-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-              0
-            </span>
+            {wishlist.length > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 bg-brand-accent text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                {wishlist.length}
+              </span>
+            )}
           </Link>
           <Link to={`/cart`} className="hover:text-brand-accent transition-colors relative">
             <ShoppingCart size={20} />
-            <span className="absolute -top-1.5 -right-1.5 bg-brand-dark text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
-              2
-            </span>
+            {cart.length > 0 && (
+              <span className="absolute -top-1.5 -right-1.5 bg-brand-dark text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center">
+                {cart.reduce((total, item) => total + item.quantity, 0)}
+              </span>
+            )}
           </Link>
           <Link to={`/login`} className="hover:text-brand-accent transition-colors hidden sm:block">
             <User size={20} />
