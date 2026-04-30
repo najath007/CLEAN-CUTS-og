@@ -1,5 +1,5 @@
 import React from 'react'
-import { menProduct } from '../data/menProduct'
+import { useShop } from '../context/ShopContext'
 import ProductCard from '../components/ProductCard'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import HeroCarousel from '../components/HeroCarousel'
 
 function Home() {
+  const { products, loadingProducts } = useShop();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     show: {
@@ -44,8 +46,12 @@ function Home() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center"
         >
-          {menProduct.map((item, index) => (
-            <motion.div key={index} variants={itemVariants} className="w-full flex justify-center">
+          {loadingProducts ? (
+            <div className="col-span-full flex justify-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
+            </div>
+          ) : products.slice(0, 4).map((item, index) => (
+            <motion.div key={item.id || index} variants={itemVariants} className="w-full flex justify-center">
               <ProductCard product={item} />
             </motion.div>
           ))}

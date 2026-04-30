@@ -1,9 +1,11 @@
 import React from 'react'
-import { menProduct } from '../data/menProduct'
-import ProductCard from '../components/ProductCard'
 import { motion } from 'framer-motion'
+import { useShop } from '../context/ShopContext'
+import ProductCard from '../components/ProductCard'
 
 export default function Men() {
+  const { products, loadingProducts } = useShop();
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -17,7 +19,11 @@ export default function Men() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
-        {menProduct.map((item, index) => (
+        {loadingProducts ? (
+          <div className="col-span-full flex justify-center py-20">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
+          </div>
+        ) : products.map((item, index) => (
           <ProductCard key={item.id || index} product={item} />
         ))}
       </div>

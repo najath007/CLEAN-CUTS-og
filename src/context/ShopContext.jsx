@@ -7,8 +7,31 @@ export const useShop = () => {
 };
 
 export const ShopProvider = ({ children }) => {
+  const [products, setProducts] = useState([]);
+  const [loadingProducts, setLoadingProducts] = useState(true);
+  const [error, setError] = useState(null);
+
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+
+  // Fetch products from backend API
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/products');
+        if (!response.ok) throw new Error('Failed to fetch products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (err) {
+        console.error("Error fetching products:", err);
+        setError(err.message);
+      } finally {
+        setLoadingProducts(false);
+      }
+    };
+    
+    fetchProducts();
+  }, []);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -69,6 +92,9 @@ export const ShopProvider = ({ children }) => {
   const cartTotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
 
   const value = {
+    products,
+    loadingProducts,
+    error,
     cart,
     wishlist,
     addToCart,
