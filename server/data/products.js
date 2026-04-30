@@ -97,6 +97,150 @@ const products = [
         price: 499,
         rating: 4.8,
         category: "men"
+    },
+    {
+        id: 12,
+        image: "/images/vintage1.png",
+        tittle: "CleanCuts x Vintage Skull",
+        desc: "Black oversized graphic t-shirt with vintage skull design. Urban alleyway street style.",
+        price: 549,
+        rating: 4.8,
+        category: "men"
+    },
+    {
+        id: 13,
+        image: "/images/vintage2.png",
+        tittle: "CleanCuts x Retro Type",
+        desc: "White oversized t-shirt with retro typography. Perfect for skatepark sessions.",
+        price: 499,
+        rating: 4.6,
+        category: "men"
+    },
+    {
+        id: 14,
+        image: "/images/vintage3.png",
+        tittle: "CleanCuts x Neo Tokyo",
+        desc: "Dark grey oversized t-shirt with anime graphic. Distressed vintage aesthetic.",
+        price: 599,
+        rating: 4.9,
+        category: "men"
+    },
+    {
+        id: 15,
+        image: "/images/vintage4.png",
+        tittle: "CleanCuts x Minimal Decay",
+        desc: "Olive green oversized t-shirt with minimalist logo. Raw urban decay style.",
+        price: 449,
+        rating: 4.5,
+        category: "men"
+    },
+    {
+        id: 16,
+        image: "/images/women_pink.png",
+        tittle: "CleanCuts Women x Pink",
+        desc: "Premium oversized pink t-shirt for women.",
+        price: 499,
+        rating: 4.8,
+        category: "women"
+    },
+    {
+        id: 17,
+        image: "/images/women_classic.png",
+        tittle: "CleanCuts Women x Classic",
+        desc: "Classic fit for women in urban aesthetics.",
+        price: 549,
+        rating: 4.7,
+        category: "women"
+    },
+    {
+        id: 18,
+        image: "/images/women_vintage.png",
+        tittle: "CleanCuts Women x Vintage",
+        desc: "Vintage washed grey tee for women.",
+        price: 499,
+        rating: 4.6,
+        category: "women"
+    },
+    {
+        id: 19,
+        image: "/images/women_urban.png",
+        tittle: "CleanCuts Women x Urban",
+        desc: "Urban decay inspired fit for women.",
+        price: 599,
+        rating: 4.9,
+        category: "women"
+    },
+    {
+        id: 20,
+        image: "/images/kids_play.png",
+        tittle: "CleanCuts Kids x Play",
+        desc: "Playful yellow tee for active kids.",
+        price: 399,
+        rating: 4.8,
+        category: "kids"
+    },
+    {
+        id: 21,
+        image: "/images/kids_explorer.png",
+        tittle: "CleanCuts Kids x Explorer",
+        desc: "Explorer edition for young adventurers.",
+        price: 449,
+        rating: 4.7,
+        category: "kids"
+    },
+    {
+        id: 22,
+        image: "/images/kids_dream.png",
+        tittle: "CleanCuts Kids x Dream",
+        desc: "Dream big comfortable kids wear.",
+        price: 349,
+        rating: 4.6,
+        category: "kids"
+    },
+    {
+        id: 23,
+        image: "/images/kids_style.png",
+        tittle: "CleanCuts Kids x Style",
+        desc: "Stylish oversized fit for kids.",
+        price: 399,
+        rating: 4.9,
+        category: "kids"
+    },
+    {
+        id: 24,
+        image: "/images/brand_supreme.png",
+        tittle: "Supreme Drop",
+        desc: "Exclusive brand drop, premium material.",
+        price: 1999,
+        rating: 4.9,
+        category: "brands"
+    },
+    {
+        id: 25,
+        image: "/images/brand_offwhite.png",
+        tittle: "Off-White Signature",
+        desc: "Signature brand edition oversized fit.",
+        price: 2499,
+        rating: 4.8,
+        category: "brands"
+    },
+    {
+        id: 26,
+        image: "/images/brand_nike.png",
+        tittle: "Nike SB Exclusive",
+        desc: "Skateboard exclusive premium wear.",
+        price: 1499,
+        rating: 4.7,
+        category: "brands"
+    },
+    {
+        id: 27,
+        image: "/images/brand_bape.png",
+        tittle: "BAPE Classic",
+        desc: "Classic streetwear brand aesthetic.",
+        price: 2999,
+        rating: 4.9,
+        category: "brands"
     }
 ];
 

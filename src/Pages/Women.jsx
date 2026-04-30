@@ -1,8 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Star, ShoppingBag } from 'lucide-react'
+import { useShop } from '../context/ShopContext'
+import ProductCard from '../components/ProductCard'
 
 export default function Women() {
+  const { products, loadingProducts } = useShop();
+  const womenProducts = products.filter(p => p.category === 'women');
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Hero Section */}
@@ -61,9 +66,17 @@ export default function Women() {
         </div>
       </section>
 
-      {/* Placeholder for products */}
-      <section className="max-w-7xl mx-auto px-4 md:px-8 py-20 text-center">
-        <h2 className="text-2xl font-bold text-slate-400">Products Coming Soon...</h2>
+      {/* Products Grid */}
+      <section className="max-w-7xl mx-auto px-4 md:px-8 py-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
+          {loadingProducts ? (
+            <div className="col-span-full flex justify-center py-20">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
+            </div>
+          ) : womenProducts.map((item, index) => (
+            <ProductCard key={item.id || index} product={item} />
+          ))}
+        </div>
       </section>
     </div>
   )
