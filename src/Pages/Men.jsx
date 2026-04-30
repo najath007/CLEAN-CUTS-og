@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useShop } from '../context/ShopContext'
 import ProductCard from '../components/ProductCard'
+import ProductFilter, { useFilteredProducts } from '../components/ProductFilter'
 
 export default function Men() {
   const { products, loadingProducts } = useShop();
   const menProducts = products.filter(p => p.category === 'men');
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('default');
+  const filtered = useFilteredProducts(menProducts, searchQuery, sortBy);
 
   return (
     <motion.div 
@@ -83,17 +88,31 @@ export default function Men() {
         </div>
       </div>
 
-      <div className="mb-12">
+      <div className="mb-6">
         <h1 className="text-4xl font-heading font-bold text-slate-900 mb-4">Men's Collection</h1>
         <p className="text-slate-500 max-w-2xl text-lg">Explore our premium selection of men's apparel. Designed for comfort, styled for the modern lifestyle.</p>
       </div>
+
+      {/* Filter & Sort Bar */}
+      <ProductFilter
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        resultCount={filtered.length}
+      />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
         {loadingProducts ? (
           <div className="col-span-full flex justify-center py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
           </div>
-        ) : menProducts.map((item, index) => (
+        ) : filtered.length === 0 ? (
+          <div className="col-span-full text-center py-20">
+            <p className="text-xl text-slate-400 font-medium">No products found</p>
+            <p className="text-sm text-slate-300 mt-2">Try adjusting your search or filters</p>
+          </div>
+        ) : filtered.map((item, index) => (
           <ProductCard key={item.id || index} product={item} />
         ))}
       </div>

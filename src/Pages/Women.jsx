@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star, ShoppingBag } from 'lucide-react'
 import { useShop } from '../context/ShopContext'
 import ProductCard from '../components/ProductCard'
+import ProductFilter, { useFilteredProducts } from '../components/ProductFilter'
 
 export default function Women() {
   const { products, loadingProducts } = useShop();
   const womenProducts = products.filter(p => p.category === 'women');
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState('default');
+  const filtered = useFilteredProducts(womenProducts, searchQuery, sortBy);
 
   return (
     <div className="min-h-screen bg-slate-50">
@@ -44,7 +49,7 @@ export default function Women() {
             className="hidden md:block relative h-[400px]"
           >
             <img 
-              src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=800&q=80" 
+              src="/images/women_pink.png" 
               alt="Women's Fashion" 
               className="absolute inset-0 w-full h-full object-cover rounded-3xl shadow-2xl -rotate-2"
             />
@@ -59,7 +64,7 @@ export default function Women() {
               </div>
               <div>
                 <p className="text-sm text-slate-500 font-medium">Summer Styles</p>
-                <p className="font-bold text-slate-800">120+ Products</p>
+                <p className="font-bold text-slate-800">{womenProducts.length}+ Products</p>
               </div>
             </motion.div>
           </motion.div>
@@ -68,12 +73,26 @@ export default function Women() {
 
       {/* Products Grid */}
       <section className="max-w-7xl mx-auto px-4 md:px-8 py-20">
+        {/* Filter & Sort Bar */}
+        <ProductFilter
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+          resultCount={filtered.length}
+        />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-items-center">
           {loadingProducts ? (
             <div className="col-span-full flex justify-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
             </div>
-          ) : womenProducts.map((item, index) => (
+          ) : filtered.length === 0 ? (
+            <div className="col-span-full text-center py-20">
+              <p className="text-xl text-slate-400 font-medium">No products found</p>
+              <p className="text-sm text-slate-300 mt-2">Try adjusting your search or filters</p>
+            </div>
+          ) : filtered.map((item, index) => (
             <ProductCard key={item.id || index} product={item} />
           ))}
         </div>

@@ -1,5 +1,6 @@
 import { Heart, ShoppingBag, Star } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useShop } from "../context/ShopContext";
 
 export default function ProductCard({ product }) {
@@ -15,8 +16,8 @@ export default function ProductCard({ product }) {
       whileHover={{ y: -8 }}
       className="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col w-[280px] h-full"
     >
-      {/* Image container */}
-      <div className="relative h-[320px] overflow-hidden bg-slate-50 shrink-0">
+      {/* Image container — clickable */}
+      <Link to={`/product/${id}`} className="relative h-[320px] overflow-hidden bg-slate-50 shrink-0 block cursor-pointer">
         <img 
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
           src={image} 
@@ -26,32 +27,34 @@ export default function ProductCard({ product }) {
         
         {/* Quick actions overlay */}
         <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        
-        {/* Top actions */}
-        <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300">
-          <button 
-            onClick={() => toggleWishlist(product)}
-            className="bg-white p-2.5 rounded-full shadow-md hover:scale-110 transition-transform"
-          >
-            <Heart 
-              size={18} 
-              className={isFavorite ? "fill-brand-accent text-brand-accent" : "text-slate-400"} 
-            />
-          </button>
-        </div>
 
         {/* Rating Badge */}
         <div className="absolute top-3 left-3 bg-white/90 backdrop-blur px-2.5 py-1 rounded-full flex items-center gap-1 text-sm font-medium shadow-sm">
           <Star size={14} className="fill-yellow-400 text-yellow-400" />
           <span className="text-slate-700">{rating}</span>
         </div>
+      </Link>
+
+      {/* Top actions — outside Link to avoid nested interactives */}
+      <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300 z-10">
+        <button 
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product); }}
+          className="bg-white p-2.5 rounded-full shadow-md hover:scale-110 transition-transform"
+        >
+          <Heart 
+            size={18} 
+            className={isFavorite ? "fill-brand-accent text-brand-accent" : "text-slate-400"} 
+          />
+        </button>
       </div>
 
       {/* Content */}
       <div className="p-5 flex flex-col flex-grow">
-        <h2 className="font-heading font-semibold text-lg text-slate-800 line-clamp-1 mb-1 group-hover:text-brand-accent transition-colors">
-          {tittle}
-        </h2>
+        <Link to={`/product/${id}`}>
+          <h2 className="font-heading font-semibold text-lg text-slate-800 line-clamp-1 mb-1 group-hover:text-brand-accent transition-colors">
+            {tittle}
+          </h2>
+        </Link>
         <p className="text-sm text-slate-500 line-clamp-2 mb-4 flex-grow leading-relaxed">
           {desc}
         </p>

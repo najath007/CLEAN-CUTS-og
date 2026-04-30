@@ -9,6 +9,7 @@ import Brand from './Pages/Brand'
 import Cart from './Pages/Cart'
 import Favorite from './Pages/Favorite'
 import Login from './Pages/Login'
+import ProductDetail from './Pages/ProductDetail'
 
 
 
@@ -26,6 +27,7 @@ function App() {
                     <Route path='/cart' element={<Cart />}/>
                     <Route path='/favorite' element={<Favorite/>}/>
                     <Route path='/login' element={<Login/>} />
+                    <Route path='/product/:id' element={<ProductDetail />} />
                 </Routes>
             </div>
 

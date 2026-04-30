@@ -70,7 +70,7 @@ export default function HeroCarousel() {
   const prevSlide = () => setCurrent((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
 
   return (
-    <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-brand-dark pt-20">
+    <section className="relative h-[80vh] min-h-[600px] overflow-hidden bg-brand-dark">
       
       <AnimatePresence mode="wait">
         <motion.div
