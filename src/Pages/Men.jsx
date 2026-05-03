@@ -6,7 +6,7 @@ import ProductFilter, { useFilteredProducts } from '../components/ProductFilter'
 
 export default function Men() {
   const { products, loadingProducts } = useShop();
-  const menProducts = products.filter(p => p.category === 'men');
+  const menProducts = products.filter(p => p.category === 'men').reverse();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('default');

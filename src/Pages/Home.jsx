@@ -105,7 +105,7 @@ function Home() {
             <div className="col-span-full flex justify-center py-20">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
             </div>
-          ) : products.slice(0, 4).map((item, index) => (
+          ) : [...products].reverse().slice(0, 4).map((item, index) => (
             <motion.div key={item.id || index} variants={itemVariants} className="w-full flex justify-center">
               <ProductCard product={item} />
             </motion.div>
