@@ -38,8 +38,14 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 md:px-8 flex items-center justify-between">
         
         {/* Logo */}
-        <Link to={`/`} className="flex-shrink-0">
-          <span className="font-heading font-bold text-2xl tracking-tighter text-brand-dark">
+        <Link to={`/`} className="flex-shrink-0 flex items-center gap-2">
+          <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm border border-slate-100">
+            <svg viewBox="0 0 100 100" className="w-full h-full">
+              <path d="M 60 30 A 24 24 0 1 0 60 70" stroke="black" strokeWidth="16" fill="none" strokeLinecap="butt" />
+              <path d="M 80 30 A 24 24 0 1 0 80 70" stroke="#3b82f6" strokeWidth="16" fill="none" strokeLinecap="butt" />
+            </svg>
+          </div>
+          <span className="font-heading font-bold text-2xl tracking-tighter text-brand-dark hidden sm:block">
             Clean<span className="text-brand-accent">Cuts.</span>
           </span>
         </Link>
