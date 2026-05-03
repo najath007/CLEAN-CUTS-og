@@ -119,6 +119,25 @@ export default function Navbar() {
         </div>
       </div>
 
+      {/* Mobile Category Bar (Horizontal Scroll) */}
+      <div className="md:hidden w-full overflow-x-auto border-t border-slate-100/50 mt-2 px-4 pb-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex items-center gap-6 min-w-max pt-2">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              className={`text-[11px] sm:text-xs font-bold tracking-widest uppercase transition-colors whitespace-nowrap pb-1 ${
+                location.pathname === link.path 
+                  ? "text-brand-dark border-b-2 border-brand-accent" 
+                  : "text-slate-500 hover:text-brand-accent"
+              }`}
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
