@@ -12,9 +12,8 @@ export default function ProductCard({ product }) {
   const isFavorite = isInWishlist(id);
 
   return (
-    <motion.div 
-      whileHover={{ y: -8 }}
-      className="group relative bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col w-full h-full"
+    <div 
+      className="group relative bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col w-full h-full"
     >
       {/* Image container — clickable */}
       <Link to={`/product/${id}`} className="relative aspect-[3/4] sm:aspect-auto sm:h-[320px] overflow-hidden bg-slate-50 shrink-0 block cursor-pointer">
