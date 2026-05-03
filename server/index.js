@@ -35,6 +35,24 @@ app.use(express.json());
 // Routes
 app.use('/api/products', productRoutes);
 
+const Product = require('./models/Product');
+const products = require('./data/products');
+
+// Seed route (Temporary - to bypass Render Free Tier Shell limits)
+app.get('/api/seed', async (req, res) => {
+    try {
+        await Product.deleteMany();
+        const sampleProducts = products.map(p => {
+            const { id, ...rest } = p;
+            return rest;
+        });
+        await Product.insertMany(sampleProducts);
+        res.send('Database successfully seeded! You can now deploy Vercel.');
+    } catch (error) {
+        res.status(500).send('Error seeding database: ' + error.message);
+    }
+});
+
 // Base route
 app.get('/', (req, res) => {
     res.send('CleanCuts API is running with MongoDB...');
