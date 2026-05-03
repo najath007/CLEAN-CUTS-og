@@ -241,6 +241,51 @@ const products = [
         price: 2999,
         rating: 4.9,
         category: "brands"
+    },
+    {
+        id: 28,
+        image: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=640&q=80",
+        tittle: "CleanCuts x Cyberpunk",
+        desc: "Neon city skyline graphic printed oversized t-shirt in stealth black.",
+        price: 699,
+        rating: 4.8,
+        category: "men"
+    },
+    {
+        id: 29,
+        image: "https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?w=640&q=80",
+        tittle: "CleanCuts x Anime Tokyo",
+        desc: "Vintage Japanese streetwear style oversized graphic tee.",
+        price: 549,
+        rating: 4.7,
+        category: "men"
+    },
+    {
+        id: 30,
+        image: "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=640&q=80",
+        tittle: "CleanCuts x Retro Arcade",
+        desc: "White oversized t-shirt featuring 8-bit retro gaming graphics.",
+        price: 499,
+        rating: 4.6,
+        category: "men"
+    },
+    {
+        id: 31,
+        image: "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?w=640&q=80",
+        tittle: "CleanCuts x The Void",
+        desc: "Abstract dark-art graphic print on premium heavyweight cotton.",
+        price: 599,
+        rating: 4.9,
+        category: "men"
+    },
+    {
+        id: 32,
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=640&q=80",
+        tittle: "CleanCuts x Marvel Venom",
+        desc: "Official collaboration symbiote oversized black graphic tee.",
+        price: 749,
+        rating: 4.9,
+        category: "men"
     }
 ];
 
