@@ -5,25 +5,25 @@ import { useShop } from "../context/ShopContext";
 
 export default function ProductCard({ product }) {
   const { addToCart, toggleWishlist, isInWishlist } = useShop();
-  
+
   if (!product) return null;
 
   const { image, tittle, desc, price, rating, id } = product;
   const isFavorite = isInWishlist(id);
 
   return (
-    <div 
+    <div
       className="group relative bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300 overflow-hidden border border-slate-100 flex flex-col w-full h-full"
     >
       {/* Image container — clickable */}
       <Link to={`/product/${id}`} className="relative aspect-[3/4] sm:aspect-auto sm:h-[320px] overflow-hidden bg-slate-50 shrink-0 block cursor-pointer">
-        <img 
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out" 
-          src={image} 
-          alt={tittle} 
+        <img
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+          src={image}
+          alt={tittle}
           loading="lazy"
         />
-        
+
         {/* Quick actions overlay */}
         <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
@@ -36,13 +36,13 @@ export default function ProductCard({ product }) {
 
       {/* Top actions — outside Link to avoid nested interactives */}
       <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300 z-10">
-        <button 
+        <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggleWishlist(product); }}
           className="bg-white p-2.5 rounded-full shadow-md hover:scale-110 transition-transform"
         >
-          <Heart 
-            size={18} 
-            className={isFavorite ? "fill-brand-accent text-brand-accent" : "text-slate-400"} 
+          <Heart
+            size={18}
+            className={isFavorite ? "fill-brand-accent text-brand-accent" : "text-slate-400"}
           />
         </button>
       </div>
@@ -75,8 +75,8 @@ export default function ProductCard({ product }) {
             <span className="text-xs text-slate-400 font-medium uppercase tracking-wider mb-0.5">Price</span>
             <span className="font-semibold text-lg text-slate-900">₹{price}</span>
           </div>
-          
-          <button 
+
+          <button
             onClick={() => addToCart(product)}
             className="bg-brand-dark hover:bg-brand-accent text-white p-2.5 rounded-xl transition-colors flex items-center justify-center"
           >
@@ -84,6 +84,6 @@ export default function ProductCard({ product }) {
           </button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
