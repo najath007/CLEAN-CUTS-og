@@ -82,7 +82,13 @@ export default function Navbar() {
         </div>
 
         {/* Icons */}
-        <div className="flex items-center gap-5 text-slate-600">
+        <div className="flex items-center gap-4 sm:gap-5 text-slate-600">
+          <button 
+            className="lg:hidden hover:text-brand-accent transition-colors"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <Search size={20} />
+          </button>
           <Link to={`/favorite`} className="hover:text-brand-accent transition-colors relative group">
             <Heart size={20} />
             {wishlist.length > 0 && (
