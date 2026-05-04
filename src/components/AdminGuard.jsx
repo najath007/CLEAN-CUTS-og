@@ -5,6 +5,12 @@ import { Lock, Eye, EyeOff, ShieldCheck, AlertCircle } from "lucide-react";
 const SESSION_KEY = "cc_admin_authed";
 const CORRECT = import.meta.env.VITE_ADMIN_PASSWORD;
 
+/** Call this anywhere to log the admin out */
+export function logoutAdmin() {
+  sessionStorage.removeItem(SESSION_KEY);
+  window.location.href = "/";
+}
+
 export default function AdminGuard({ children }) {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
@@ -19,6 +25,12 @@ export default function AdminGuard({ children }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!password.includes("@gmail.com")) {
+      setError("Password must contain @gmail.com");
+      setShaking(true);
+      setTimeout(() => setShaking(false), 500);
+      return;
+    }
     if (password === CORRECT) {
       sessionStorage.setItem(SESSION_KEY, "true");
       setAuthed(true);
@@ -55,6 +67,7 @@ export default function AdminGuard({ children }) {
         <div className="text-center mb-8">
           <h1 className="font-heading font-bold text-2xl text-white">Admin Access</h1>
           <p className="text-white/40 text-sm mt-2">Enter your admin password to continue.</p>
+          <p className="text-white/30 text-xs mt-1">Must include @gmail.com</p>
         </div>
 
         {/* Form */}

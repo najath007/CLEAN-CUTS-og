@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { logoutAdmin } from "../components/AdminGuard";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, ShoppingBag, Users, Package, BarChart2,
@@ -359,9 +360,13 @@ export default function Admin() {
           )}
         </AnimatePresence>
         {(sidebarOpen || mobile) && (
-          <Link to="/" className="text-white/40 hover:text-white transition-colors" title="Back to Store">
+          <button
+            onClick={logoutAdmin}
+            className="text-white/40 hover:text-red-400 transition-colors"
+            title="Log Out"
+          >
             <LogOut size={16} />
-          </Link>
+          </button>
         )}
       </div>
     </aside>
