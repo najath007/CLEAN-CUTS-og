@@ -10,6 +10,7 @@ import Cart from './Pages/Cart'
 import Favorite from './Pages/Favorite'
 import Login from './Pages/Login'
 import Admin from './Pages/Admin'
+import AdminGuard from './components/AdminGuard'
 import ProductDetail from './Pages/ProductDetail'
 
 function AppLayout() {
@@ -29,7 +30,7 @@ function AppLayout() {
                     <Route path='/cart' element={<Cart />}/>
                     <Route path='/favorite' element={<Favorite/>}/>
                     <Route path='/login' element={<Login/>} />
-                    <Route path='/admin' element={<Admin />} />
+                    <Route path='/admin' element={<AdminGuard><Admin /></AdminGuard>} />
                     <Route path='/product/:id' element={<ProductDetail />} />
                 </Routes>
             </div>
