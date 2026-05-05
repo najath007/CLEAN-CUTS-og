@@ -426,7 +426,12 @@ export default function Admin() {
             />
           </div>
 
-          <div className="ml-auto flex items-center gap-3">
+          <div className="ml-auto flex items-center gap-4">
+            <Link to="/" className="text-sm font-semibold text-brand-accent bg-brand-accent/10 hover:bg-brand-accent/20 px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1.5 hidden sm:flex">
+              <ArrowUpRight size={16} />
+              Storefront
+            </Link>
+            
             <button className="relative text-slate-500 hover:text-brand-dark transition-colors">
               <Bell size={20} />
               <span className="absolute -top-1 -right-1 w-4 h-4 bg-brand-accent rounded-full text-[9px] text-white flex items-center justify-center font-bold">3</span>
