@@ -130,7 +130,7 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <div className="relative hidden sm:block" ref={profileMenuRef}>
+          <div className="relative" ref={profileMenuRef}>
             <button 
               onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
               className="hover:text-brand-accent transition-colors flex items-center"
