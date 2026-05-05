@@ -66,12 +66,35 @@ const SocialButton = ({ children, onClick }) => (
 function LoginForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
 
-  const handleChange = (e) => setForm((f) => ({ ...f, [e.target.id]: e.target.value }));
+  const handleChange = (e) => {
+    setForm((f) => ({ ...f, [e.target.id]: e.target.value }));
+    setError("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: connect to auth API
+    if (!form.email || !form.password) {
+      setError("Please fill in all fields");
+      return;
+    }
+    
+    const users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+    const user = users.find(u => u.email === form.email);
+    
+    if (!user) {
+      setError("No account found with this email");
+      return;
+    }
+    
+    if (user.password !== form.password) {
+      setError("Incorrect password");
+      return;
+    }
+
+    // Success
+    localStorage.setItem('cc_active_user', JSON.stringify(user));
     navigate("/");
   };
 
@@ -104,6 +127,16 @@ function LoginForm() {
         </a>
       </div>
 
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-sm font-medium text-red-600 bg-red-50 px-4 py-3 rounded-xl border border-red-100"
+        >
+          {error}
+        </motion.div>
+      )}
+
       <motion.button
         type="submit"
         whileTap={{ scale: 0.97 }}
@@ -118,12 +151,48 @@ function LoginForm() {
 function SignupForm() {
   const navigate = useNavigate();
   const [form, setForm] = useState({ name: "", email: "", password: "", confirm: "" });
+  const [error, setError] = useState("");
 
-  const handleChange = (e) => setForm((f) => ({ ...f, [e.target.id]: e.target.value }));
+  const handleChange = (e) => {
+    setForm((f) => ({ ...f, [e.target.id]: e.target.value }));
+    setError("");
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: connect to auth API
+    
+    if (!form.name || !form.email || !form.password || !form.confirm) {
+      setError("Please fill in all fields");
+      return;
+    }
+    
+    if (!form.email.includes("@")) {
+      setError("Please enter a valid email address");
+      return;
+    }
+    
+    if (form.password.length < 8) {
+      setError("Password must be at least 8 characters long");
+      return;
+    }
+    
+    if (form.password !== form.confirm) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem('cc_users') || '[]');
+    if (users.find(u => u.email === form.email)) {
+      setError("Email already exists. Please use a different email or sign in.");
+      return;
+    }
+
+    // Success
+    const newUser = { name: form.name, email: form.email, password: form.password };
+    users.push(newUser);
+    localStorage.setItem('cc_users', JSON.stringify(users));
+    localStorage.setItem('cc_active_user', JSON.stringify(newUser));
+    
     navigate("/");
   };
 
@@ -167,6 +236,16 @@ function SignupForm() {
         and{" "}
         <a href="#" className="text-brand-accent hover:underline font-medium">Privacy Policy</a>.
       </p>
+
+      {error && (
+        <motion.div
+          initial={{ opacity: 0, y: -5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-sm font-medium text-red-600 bg-red-50 px-4 py-3 rounded-xl border border-red-100"
+        >
+          {error}
+        </motion.div>
+      )}
 
       <motion.button
         type="submit"
