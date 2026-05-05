@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ShoppingCart, Heart, User, Search, Menu, X } from "lucide-react";
 import { useShop } from "../context/ShopContext";
@@ -7,6 +7,8 @@ import { useShop } from "../context/ShopContext";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const profileMenuRef = useRef(null);
   const location = useLocation();
   const { cart, wishlist } = useShop();
 
@@ -16,6 +18,16 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileMenuRef.current && !profileMenuRef.current.contains(event.target)) {
+        setIsProfileMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const navLinks = [
@@ -105,9 +117,31 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <Link to={`/login`} className="hover:text-brand-accent transition-colors hidden sm:block">
-            <User size={20} />
-          </Link>
+          <div className="relative hidden sm:block" ref={profileMenuRef}>
+            <button 
+              onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+              className="hover:text-brand-accent transition-colors flex items-center"
+            >
+              <User size={20} />
+            </button>
+            <AnimatePresence>
+              {isProfileMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.2 }}
+                  className="absolute right-0 mt-5 w-52 bg-white border border-slate-100 rounded-xl shadow-lg py-2 overflow-hidden z-50 origin-top-right"
+                >
+                  <Link to="/profile" className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-accent transition-colors" onClick={() => setIsProfileMenuOpen(false)}>My Profile</Link>
+                  <Link to="/helpcentre" className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-accent transition-colors" onClick={() => setIsProfileMenuOpen(false)}>Help Centre</Link>
+                  <Link to="/coupons" className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-accent transition-colors" onClick={() => setIsProfileMenuOpen(false)}>Coupons</Link>
+                  <div className="border-t border-slate-100 my-1"></div>
+                  <Link to="/login" className="block px-4 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 transition-colors" onClick={() => setIsProfileMenuOpen(false)}>Logout</Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
           
           {/* Mobile Menu Toggle */}
           <button 
