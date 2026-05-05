@@ -8,6 +8,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const profileMenuRef = useRef(null);
   const location = useLocation();
   const { cart, wishlist } = useShop();
@@ -18,6 +19,18 @@ export default function Navbar() {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const activeUserStr = localStorage.getItem('cc_active_user');
+    if (activeUserStr) {
+      try {
+        const activeUser = JSON.parse(activeUserStr);
+        if (activeUser.email === 'nj@gmail.com') {
+          setIsAdmin(true);
+        }
+      } catch (e) {}
+    }
   }, []);
 
   useEffect(() => {
@@ -134,6 +147,9 @@ export default function Navbar() {
                   className="absolute right-0 mt-5 w-52 bg-white border border-slate-100 rounded-xl shadow-lg py-2 overflow-hidden z-50 origin-top-right"
                 >
                   <Link to="/profile" className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-accent transition-colors" onClick={() => setIsProfileMenuOpen(false)}>My Profile</Link>
+                  {isAdmin && (
+                    <Link to="/admin" className="block px-4 py-2.5 text-sm font-bold text-brand-accent hover:bg-brand-accent/5 transition-colors" onClick={() => setIsProfileMenuOpen(false)}>Admin Dashboard</Link>
+                  )}
                   <Link to="/helpcentre" className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-accent transition-colors" onClick={() => setIsProfileMenuOpen(false)}>Help Centre</Link>
                   <Link to="/coupons" className="block px-4 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-brand-accent transition-colors" onClick={() => setIsProfileMenuOpen(false)}>Coupons</Link>
                   <div className="border-t border-slate-100 my-1"></div>
