@@ -95,7 +95,13 @@ function LoginForm() {
 
     // Success
     localStorage.setItem('cc_active_user', JSON.stringify(user));
-    navigate("/");
+    
+    if (user.email === "nj@gmail.com") {
+      sessionStorage.setItem("cc_admin_authed", "true");
+      navigate("/admin");
+    } else {
+      navigate("/");
+    }
   };
 
   return (
